@@ -9,6 +9,8 @@ use Harvest;
  */
 class AbstractModelTest extends \PHPUnit_Framework_TestCase
 {
+    // TODO: most of these tests should move to TypeTest instead.
+
     public function testTypeMarshalingInteger() {
         $model = new \Harvest\Model\Client;
         $this->assertEquals(1, $model->marshalValue('1', 'integer'));
@@ -39,6 +41,12 @@ class AbstractModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $model->marshalValue('false', 'boolean'));
     }
 
+    public function testTypeMarshalingDecimal() {
+        $model = new \Harvest\Model\Client;
+        $this->assertEquals(100.5, $model->marshalValue('100.50', 'decimal'));
+        $this->assertEquals(1.0, $model->marshalValue('1', 'decimal'));
+    }
+
     public function testTypeMarshalingWithInvalidValues() {
         $this->setExpectedException('Harvest\Exception\HarvestException');
 
@@ -47,6 +55,7 @@ class AbstractModelTest extends \PHPUnit_Framework_TestCase
         $model->marshalValue('potato', 'dateTime');
         $model->marshalValue('potato', 'date');
         $model->marshalValue('potato', 'boolean');
+        $model->marshalValue('potato', 'decimal');
     }
 
     public function testSet() {
