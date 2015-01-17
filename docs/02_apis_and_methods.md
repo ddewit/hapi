@@ -4,15 +4,15 @@ HaPi supports the following Harvest APIs:
 
 ## Accounts
  * Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Accounts.md
- * HaPi status: `todo`
- 
+ * HaPi status: `implemented`
+
  * `\Harvest\Api\Account::whoAmI()`
    User and account information of the current user.
 
 ## Client Contacts
  * Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Client%20Contacts.md
  * HaPi status: `todo`
- 
+
  * `\Harvest\Api\ClientContact::all(DateTime $updated_since)`  
    Get all contacts for an account.
  * `\Harvest\Api\ClientContact::contactsForClient(int $client_id, DateTime $updated_since)`  
@@ -29,7 +29,7 @@ HaPi supports the following Harvest APIs:
 ## Clients
  * Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Clients.md
  * HaPi status: `implemented`
- 
+
  * `\Harvest\Api\Client::all(DateTime $updated_since)`  
    Get all clients.
  * `\Harvest\Api\Client::get(int $client_id)`  
@@ -46,13 +46,13 @@ HaPi supports the following Harvest APIs:
 ## Estimates
  * Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Estimates.md
  * HaPi status: `wontfix`
- 
+
 Currently, the Harvest API does not have support for Estimates. They do not have a timeframe for deploying it. So HaPi does not support this either. Sorry.
 
 ## Expense Categories
  * Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Expense%20Categories.md
  * HaPi status: `todo`
- 
+
  * `\Harvest\Api\ExpenseCategory::all(DateTime $updated_since)`  
    Get all expense categories.
  * `\Harvest\Api\ExpenseCategory::get(int $expense_category_id)`  

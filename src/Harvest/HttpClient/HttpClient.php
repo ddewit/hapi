@@ -312,13 +312,16 @@ class HttpClient
         switch ($node->nodeName) {
             case "expense-category":
                 $item = new Model\ExpenseCategory;
-            break;
+                break;
             case "client":
                 $item = new Model\Client;
-            break;
+                break;
             case "contact":
                 $item = new Model\Contact;
-            break;
+                break;
+            case "company":
+                $item = new Model\Company;
+                break;
             case "add":
                 $children = $node->childNodes;
                 foreach ($children as $child) {
@@ -330,48 +333,51 @@ class HttpClient
             case "day_entry":
             case "day-entry":
                 $item = new Model\DayEntry;
-            break;
+                break;
             case "expense":
                 $item = new Model\Expense;
-            break;
+                break;
             case "invoice":
                 $item = new Model\Invoice;
-            break;
+                break;
             case "invoice-item-category":
                 $item = new Model\InvoiceItemCategory;
-            break;
+                break;
             case "invoice-message":
                 $item = new Model\InvoiceMessage;
-            break;
+                break;
             case "payment":
                 $item = new Model\Payment;
-            break;
+                break;
             case "project":
                 $item = new Model\Project;
-            break;
+                break;
             case "task":
                 $item = new Model\Task;
-            break;
+                break;
             case "user":
                 $item = new Model\User;
-            break;
+                break;
             case "user-assignment":
                 $item = new Model\UserAssignment;
-            break;
+                break;
             case "task-assignment":
                 $item = new Model\TaskAssignment;
-            break;
+                break;
             case "daily":
                 $item = new Model\DailyActivity;
-            break;
+                break;
             case "timer":
                 $item = new Model\Timer;
-            break;
+                break;
             case "hash":
                 $item = new Model\Throttle;
-            break;
+                break;
+            case "#text":
+                break;
             default:
-            break;
+                throw new Exception\HarvestException(sprintf('Got type %s, but there is no Model assigned to that.', $node->nodeName));
+                break;
         }
 
         if (!is_null($item)) {
