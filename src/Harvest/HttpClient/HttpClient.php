@@ -108,7 +108,7 @@ class HttpClient
     /**
      * @param const $mode Sets the desired HTTP mode (GET, POST, PUT, DELETE)
      */
-    protected function setHttpMode($mode = self::HTTP_GET)
+    protected function setHttpMode($mode)
     {
         if(in_array($mode, array(self::HTTP_GET, self::HTTP_POST, self::HTTP_PUT, self::HTTP_DELETE))) {
             $this->httpMode = $mode;
