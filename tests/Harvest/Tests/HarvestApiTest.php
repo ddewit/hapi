@@ -11,7 +11,7 @@ class HarvestApiTest extends \PHPUnit_Framework_TestCase
 {
     public function testFetchApiClass() {
         $harvest = new \Harvest\HarvestApi;
-        $harvest->api('project');
+        $harvest->api('Project');
     }
 
     public function testFetchInvalidApiClass() {

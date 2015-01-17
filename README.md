@@ -17,7 +17,7 @@ $harvest = new Harvest\HarvestApi;
 $harvest->authenticate('j.doe@example.com', 'mypassword');
 $harvest->setAccount('myaccount');
 
-$harvest->api('client')->get(12345);
+$harvest->api('Client')->get(12345);
 ```
 
 Run tests
