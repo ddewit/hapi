@@ -23,7 +23,7 @@ class Client extends AbstractApi
      * @param  mixed  $updated_since DateTime
      * @return Result
      */
-    public function getClients($updated_since = null)
+    public function all($updated_since = null)
     {
         $url = "clients" . $this->appendUpdatedSinceParam($updated_since);
         return $this->get($url, true);
@@ -45,7 +45,7 @@ class Client extends AbstractApi
      * @param  int    $client_id Client Identifier
      * @return Result
      */
-    public function getClient($client_id)
+    public function get($client_id)
     {
         $url = "clients/$client_id";
         return $this->get($url, false);
@@ -71,7 +71,7 @@ class Client extends AbstractApi
      * @param  Client $client Client
      * @return Result
      */
-    public function createClient(Model\Client $client)
+    public function create(Model\Client $client)
     {
         $url = "clients";
         return $this->post($url, $client->toXml());
@@ -97,7 +97,7 @@ class Client extends AbstractApi
      * @param  Client $client Client
      * @return Result
      */
-    public function updateClient(Model\Client $client)
+    public function update(Model\Client $client)
     {
         $url = "clients/$client->id";
         return $this->put($url, $client->toXml());
@@ -118,7 +118,7 @@ class Client extends AbstractApi
      * @param $int client_id Client Identifier
      * @return Result
      */
-    public function toggleClient($client_id)
+    public function toggle($client_id)
     {
         $url = "clients/$client_id/toggle";
         return $this->put($url, "");
@@ -139,7 +139,7 @@ class Client extends AbstractApi
      * @param  int    $client_id Client Identifier
      * @return Result
      */
-    public function deleteClient($client_id)
+    public function delete($client_id)
     {
         $url = "clients/$client_id";
         return $this->delete($url);

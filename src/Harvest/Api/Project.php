@@ -23,10 +23,10 @@ class Project extends AbstractApi
      * @param  mixed  $updated_since DateTime
      * @return Result
      */
-    public function getProjects($updated_since = null)
+    public function all($updated_since = null)
     {
         $url = "projects".$this->appendUpdatedSinceParam($updated_since);
-        return $this->get($url, true);
+        return $this->performGet($url, true);
     }
 
     /**
@@ -44,10 +44,10 @@ class Project extends AbstractApi
      * @param  int    $client_id Client Identifier
      * @return Result
      */
-    public function getClientProjects($client_id)
+    public function getProjectsForClient($client_id)
     {
         $url = "projects?client=$client_id";
-        return $this->get($url, true);
+        return $this->performGet($url, true);
     }
 
     /**
@@ -66,10 +66,10 @@ class Project extends AbstractApi
      * @param  int    $project_id Project Identifier
      * @return Result
      */
-    public function getProject($project_id)
+    public function get($project_id)
     {
         $url = "projects/$project_id";
-        return $this->get($url, false);
+        return $this->performGet($url, false);
     }
 
     /**
@@ -92,7 +92,7 @@ class Project extends AbstractApi
      * @param  Project $project Project
      * @return Result
      */
-    public function createProject(Model\Project $project)
+    public function create(Model\Project $project)
     {
         $url = "projects";
         return $this->performPost($url, $project->toXml());
@@ -118,7 +118,7 @@ class Project extends AbstractApi
      * @param  Project $project Project
      * @return Result
      */
-    public function updateProject(Model\Project $project)
+    public function update(Model\Project $project)
     {
         $url = "projects/$project->id";
         return $this->performPut($url, $project->toXml());
@@ -140,7 +140,7 @@ class Project extends AbstractApi
      * @param  int    $project_id Project Identifier
      * @return Result
      */
-    public function toggleProject($project_id)
+    public function toggle($project_id)
     {
         $url = "projects/$project_id/toggle";
         return $this->performPut($url, "");
@@ -162,7 +162,7 @@ class Project extends AbstractApi
      * @param  int    $project_id Project Identifier
      * @return Result
      */
-    public function deleteProject($project_id)
+    public function delete($project_id)
     {
         $url = "projects/$project_id";
         return $this->performDelete($url);

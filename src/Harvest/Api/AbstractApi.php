@@ -10,24 +10,24 @@ abstract class AbstractApi
         $this->harvest = $harvest;
     }
 
-    protected function get($path, $multi) {
+    protected function performGet($path, $multi) {
         return $this->harvest->getHttpClient()->get($path, $multi);
     }
 
-    protected function post($path, $data) {
+    protected function performPost($path, $data) {
         return $this->harvest->getHttpClient()->post($path, $data);
     }
 
-    protected function patch() {
-        return "blaaaah!";
+    protected function performPatch() {
+        return $this->harvest->getHttpClient()->patch();
     }
 
-    protected function put() {
-        return "blaaaah!";
+    protected function performPut() {
+        return $this->harvest->getHttpClient()->put();
     }
 
-    protected function delete() {
-        return "blaaaah!";
+    protected function performDelete() {
+        return $this->harvest->getHttpClient()->delete();
     }
 
     protected function appendUpdatedSinceParam($updated_since = null)
