@@ -1,59 +1,18 @@
 <?php
 
 
-namespace Harvest\Model;
+namespace Harvest\HttpClient;
 
-use Harvest\Exception\HarvestException;
+use Harvest\Exception;
 
-/**
- * Result
- *
- * This file contains the class Result
- *
- */
-
-/**
- * Harvest Result Object
- *
- * <b>Properties</b>
- * <ul>
- *   <li>code</li>
- *   <li>data</li>
- *   <li>Server</li>
- *   <li>Date</li>
- *   <li>Content-Type</li>
- *   <li>Connection</li>
- *   <li>Status</li>
- *   <li>X-Powered-By</li>
- *   <li>ETag</li>
- *   <li>X-Served-From</li>
- *   <li>X-Runtime</li>
- *   <li>Content-Length</li>
- *   <li>Location</li>
- *   <li>Hint</li>
- * </ul>
- *
- */
-class Result
+class HttpResponse
 {
+    protected $code = null;
+    protected $data = null;
+    protected $headers = null;
 
     /**
-     * @var string response code
-     */
-    protected $_code = null;
-
-    /**
-     * @var array response data
-     */
-    protected $_data = null;
-
-    /**
-     * @var string response headers
-     */
-    protected $_headers = null;
-
-    /**
-     * Constructor initializes {@link $_code} {@link $_data}
+     * Constructor initializes {@link $code} {@link $data}
      *
      * @param string $code    response code
      * @param array  $data    array of Quote Objects
@@ -61,9 +20,32 @@ class Result
      */
     public function __construct($code = null, $data = null, $headers = null)
     {
-        $this->_code = $code;
-        $this->_data = $data;
-        $this->_headers = $headers;
+        $this->code = (int)$code;
+        $this->data = $data;
+        $this->headers = $headers;
+
+        $this->handleUnsuccessfull();
+    }
+
+    protected function handleUnsuccessfull() {
+        switch($this->code) {
+            case 401:
+                throw new HarvestAuthenticationException($this->get('headers')['Hint']);
+                break;
+
+            case 400:
+            case 403:
+            case 404:
+            case 500:
+            case 501:
+            case 502:
+                throw new HarvestRuntimeException($this->get('headers')['Status']);
+                break;
+
+            case 503:
+                throw new HarvestApiLimitExceedException(sprintf("Retry after %s seconds", $this->get('headers')['Retry-After']));
+                break;
+        }
     }
 
     /**
@@ -75,7 +57,7 @@ class Result
      */
     public function __get($property)
     {
-        return $this->get( $property);
+        return $this->get($property);
     }
 
     /**
@@ -88,17 +70,17 @@ class Result
     {
         switch ($property) {
             case 'code':
-                return $this->_code;
+                return $this->code;
             break;
             case 'data':
-                return $this->_data;
+                return $this->data;
             break;
             case 'headers':
-                return $this->_headers;
+                return $this->headers;
             break;
             default:
-                if ( $this->_headers != null && array_key_exists($property, $this->_headers) ) {
-                    return $this->_headers[$property];
+                if ($this->headers != null && array_key_exists($property, $this->headers)) {
+                    return $this->headers[$property];
                 } else {
                     throw new HarvestException(sprintf('Unknown property %s::%s', get_class($this), $property));
                 }
@@ -116,7 +98,7 @@ class Result
      */
     public function __set($property, $value)
     {
-        $this->set( $property, $value );
+        $this->set($property, $value);
     }
 
     /**
@@ -130,13 +112,13 @@ class Result
     {
         switch ($property) {
             case 'code':
-                $this->_code = $value;
+                $this->code = $value;
             break;
             case 'data':
-                $this->_data = $value;
+                $this->data = $value;
             break;
             case 'headers':
-                $this->_headers = $value;
+                $this->headers = $value;
             break;
             default:
                 throw new HarvestException(sprintf('Unknown property %s::%s', get_class($this), $property));
@@ -150,7 +132,7 @@ class Result
      */
     public function isSuccess()
     {
-        if ( "2" == substr( $this->_code, 0, 1 ) ) {
+        if ("2" == substr($this->code, 0, 1)) {
             return true;
         } else {
             return false;

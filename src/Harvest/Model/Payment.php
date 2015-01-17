@@ -27,7 +27,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class Payment extends Harvest
+class Payment extends AbstractModel
 {
     /**
      * @var string payment

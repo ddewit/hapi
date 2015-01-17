@@ -24,7 +24,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class InvoiceItemCategory extends Harvest
+class InvoiceItemCategory extends AbstractModel
 {
     /**
      * @var string invoice-item-category

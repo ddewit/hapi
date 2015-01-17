@@ -16,16 +16,16 @@ namespace Harvest;
  *
  * <code>
  * // require the Harvest API core class
- * require_once( PATH_TO_LIB . '/HarvestReports.php' );
+ * require_once(PATH_TO_LIB . '/HarvestReports.php');
  *
  * // register the class auto loader
- * spl_autoload_register( array('HarvestReports', 'autoload') );
+ * spl_autoload_register(array('HarvestReports', 'autoload'));
  *
  * // instantiate the api object
  * $api = new HarvestReports();
- * $api->setUser( "user@email.com" );
- * $api->setPassword( "password" );
- * $api->setAccount( "account" );
+ * $api->setUser("user@email.com");
+ * $api->setPassword("password");
+ * $api->setAccount("account");
  * </code>
  *
  */
@@ -46,7 +46,7 @@ class HarvestReports extends HarvestApi
      *
      * <code>
      * $api = new HarvestReports();
-     * $api->setStartOfWeek( HarvestReports::MONDAY );
+     * $api->setStartOfWeek(HarvestReports::MONDAY);
      * </code>
      *
      * @param  string $startOfWeek Start day of work week
@@ -62,7 +62,7 @@ class HarvestReports extends HarvestApi
      *
      * <code>
      * $api = new HarvestReports();
-     * $api->setTimeZone( "EST" );
+     * $api->setTimeZone("EST");
      * </code>
      *
      * @param  string $timeZone User Time Zone
@@ -80,7 +80,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getActiveClients();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $clients = $result->data;
      * }
      * </code>
@@ -90,7 +90,7 @@ class HarvestReports extends HarvestApi
     public function getActiveClients()
     {
         $result = $this->getClients();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $clients = array();
             foreach ($result->data as $client) {
                 if ($client->active == "true") {
@@ -110,7 +110,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getInactiveClients();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $clients = $result->data;
      * }
      * </code>
@@ -120,7 +120,7 @@ class HarvestReports extends HarvestApi
     public function getInactiveClients()
     {
         $result = $this->getClients();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $clients = array();
             foreach ($result->data as $client) {
                 if ($client->active == "false") {
@@ -140,7 +140,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getActiveProjects();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $projects = $result->data;
      * }
      * </code>
@@ -150,7 +150,7 @@ class HarvestReports extends HarvestApi
     public function getActiveProjects()
     {
         $result = $this->getProjects();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $projects = array();
             foreach ($result->data as $project) {
                 if ($project->active == "true") {
@@ -170,7 +170,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getInactiveProjects();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $projects = $result->data;
      * }
      * </code>
@@ -180,7 +180,7 @@ class HarvestReports extends HarvestApi
     public function getInactiveProjects()
     {
         $result = $this->getProjects();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $projects = array();
             foreach ($result->data as $project) {
                 if ($project->active == "false") {
@@ -199,8 +199,8 @@ class HarvestReports extends HarvestApi
      * <code>
      * $api = new HarvestReports();
      *
-     * $result = $api->getClientActiveProjects( 12345 );
-     * if ( $result->isSuccess() ) {
+     * $result = $api->getClientActiveProjects(12345);
+     * if ($result->isSuccess()) {
      *     $projects = $result->data;
      * }
      * </code>
@@ -210,8 +210,8 @@ class HarvestReports extends HarvestApi
      */
     public function getClientActiveProjects($client_id)
     {
-        $result = $this->getClientProjects( $client_id );
-        if ( $result->isSuccess() ) {
+        $result = $this->getClientProjects($client_id);
+        if ($result->isSuccess()) {
             $projects = array();
             foreach ($result->data as $project) {
                 if ($project->active == "true") {
@@ -231,7 +231,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getClientInactiveProjects();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $projects = $result->data;
      * }
      * </code>
@@ -241,8 +241,8 @@ class HarvestReports extends HarvestApi
      */
     public function getClientInactiveProjects($client_id)
     {
-        $result = $this->getClientProjects( $client_id );
-        if ( $result->isSuccess() ) {
+        $result = $this->getClientProjects($client_id);
+        if ($result->isSuccess()) {
             $projects = array();
             foreach ($result->data as $project) {
                 if ($project->active == "false") {
@@ -262,7 +262,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getActiveUsers();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $users = $result->data;
      * }
      * </code>
@@ -272,10 +272,10 @@ class HarvestReports extends HarvestApi
     public function getActiveUsers()
     {
         $result = $this->getUsers();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $obj) {
-                if ( $obj->get("is-active") == "true" ) {
+                if ($obj->get("is-active") == "true") {
                     $data[$obj->id] = $obj;
                 }
             }
@@ -292,7 +292,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getInactiveUsers();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $users = $result->data;
      * }
      * </code>
@@ -302,10 +302,10 @@ class HarvestReports extends HarvestApi
     public function getInactiveUsers()
     {
         $result = $this->getUsers();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $obj) {
-                if ( $obj->get("is-active") == "false" ) {
+                if ($obj->get("is-active") == "false") {
                     $data[$obj->id] = $obj;
                 }
             }
@@ -322,7 +322,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getAdmins();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $users = $result->data;
      * }
      * </code>
@@ -332,10 +332,10 @@ class HarvestReports extends HarvestApi
     public function getAdmins()
     {
         $result = $this->getUsers();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $obj) {
-                if ( $obj->get("is-admin") == "true" ) {
+                if ($obj->get("is-admin") == "true") {
                     $data[$obj->id] = $obj;
                 }
             }
@@ -352,7 +352,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getActiveAdmins();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $user = $result->data;
      * }
      * </code>
@@ -362,10 +362,10 @@ class HarvestReports extends HarvestApi
     public function getActiveAdmins()
     {
         $result = $this->getUsers();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $obj) {
-                if ( $obj->get("is-active") == "true" && $obj->get("is-admin") == "true" ) {
+                if ($obj->get("is-active") == "true" && $obj->get("is-admin") == "true") {
                     $data[$obj->id] = $obj;
                 }
             }
@@ -382,7 +382,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getInactiveAdmins();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $users = $result->data;
      * }
      * </code>
@@ -392,10 +392,10 @@ class HarvestReports extends HarvestApi
     public function getInactiveAdmins()
     {
         $result = $this->getUsers();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $obj) {
-                if ( $obj->get("is-active") == "false" && $obj->get("is-admin") ) {
+                if ($obj->get("is-active") == "false" && $obj->get("is-admin")) {
                     $data[$obj->id] = $obj;
                 }
             }
@@ -412,7 +412,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getContractors();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $users = $result->data;
      * }
      * </code>
@@ -422,10 +422,10 @@ class HarvestReports extends HarvestApi
     public function getContractors()
     {
         $result = $this->getUsers();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $obj) {
-                if ( $obj->get("is-contractor") == "true" ) {
+                if ($obj->get("is-contractor") == "true") {
                     $data[$obj->id] = $obj;
                 }
             }
@@ -442,7 +442,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getActiveContractors();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $user = $result->data;
      * }
      * </code>
@@ -452,10 +452,10 @@ class HarvestReports extends HarvestApi
     public function getActiveContractors()
     {
         $result = $this->getUsers();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $obj) {
-                if ( $obj->get("is-active") == "true" && $obj->get("is-contractor") == "true" ) {
+                if ($obj->get("is-active") == "true" && $obj->get("is-contractor") == "true") {
                     $data[$obj->id] = $obj;
                 }
             }
@@ -472,7 +472,7 @@ class HarvestReports extends HarvestApi
      * $api = new HarvestReports();
      *
      * $result = $api->getInactiveContractors();
-     * if ( $result->isSuccess() ) {
+     * if ($result->isSuccess()) {
      *     $users = $result->data;
      * }
      * </code>
@@ -482,10 +482,10 @@ class HarvestReports extends HarvestApi
     public function getInactiveContractors()
     {
         $result = $this->getUsers();
-        if ( $result->isSuccess() ) {
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $obj) {
-                if ( $obj->get("is-active") == "false" && $obj->get("is-contractor") ) {
+                if ($obj->get("is-active") == "false" && $obj->get("is-contractor")) {
                     $data[$obj->id] = $obj;
                 }
             }
@@ -501,8 +501,8 @@ class HarvestReports extends HarvestApi
      * <code>
      * $api = new HarvestReports();
      *
-     * $result = $api->getActiveTimers( );
-     * if ( $result->isSuccess() ) {
+     * $result = $api->getActiveTimers();
+     * if ($result->isSuccess()) {
      *     $entries = $result->data;
      * }
      * </code>
@@ -511,12 +511,12 @@ class HarvestReports extends HarvestApi
      */
     public function getActiveTimers()
     {
-        $result = $this->getActiveUsers( );
-        if ( $result->isSuccess() ) {
+        $result = $this->getActiveUsers();
+        if ($result->isSuccess()) {
             $data = array();
             foreach ($result->data as $user) {
-                $subResult = $this->getUserEntries( $user->id, Range::today( $this->_timeZone ) );
-                if ( $subResult->isSuccess() ) {
+                $subResult = $this->getUserEntries($user->id, Range::today($this->_timeZone));
+                if ($subResult->isSuccess()) {
                     foreach ($subResult->data as $entry) {
                         if ($entry->timer_started_at != null || $entry->timer_started_at != "") {
                             $data[$user->id] = $entry;
@@ -537,8 +537,8 @@ class HarvestReports extends HarvestApi
      * <code>
      * $api = new HarvestReports();
      *
-     * $result = $api->getUsersActiveTimer( 12345 );
-     * if ( $result->isSuccess() ) {
+     * $result = $api->getUsersActiveTimer(12345);
+     * if ($result->isSuccess()) {
      *     $activeTimer = $result->data;
      * }
      * </code>
@@ -547,8 +547,8 @@ class HarvestReports extends HarvestApi
      */
     public function getUsersActiveTimer($user_id)
     {
-        $result = $this->getUserEntries( $user_id, Range::today( $this->_timeZone ) );
-        if ( $result->isSuccess() ) {
+        $result = $this->getUserEntries($user_id, Range::today($this->_timeZone));
+        if ($result->isSuccess()) {
             $data = null;
             foreach ($result->data as $entry) {
                 if ($entry->timer_started_at != null || $entry->timer_started_at != "") {

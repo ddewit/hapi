@@ -12,14 +12,12 @@ Usage
 
 ```php
 <?php
-require __DIR__ . '/vendor/autoload.php';
 
-$api = new Harvest\HarvestApi();
-$api->setUser('your@email.com');
-$api->setPassword('password');
-$api->setAccount('account');
+$harvest = new Harvest\HarvestApi;
+$harvest->authenticate('j.doe@example.com', 'mypassword');
+$harvest->setAccount('myaccount');
 
-$result = $api->getClient(12345);
+$harvest->api('client')->get(12345);
 ```
 
 Run tests

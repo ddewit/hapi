@@ -29,7 +29,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class InvoiceMessage extends Harvest
+class InvoiceMessage extends AbstractModel
 {
     /**
      * @var string invoice-message

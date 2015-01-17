@@ -29,7 +29,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class DayEntry extends Harvest
+class DayEntry extends AbstractModel
 {
     /**
      * @var string request

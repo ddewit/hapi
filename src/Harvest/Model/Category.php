@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Harvest\Model;
 
 /**
@@ -14,6 +13,6 @@ namespace Harvest\Model;
  * Harvest Categroy Object
  *
  */
-class Category extends Harvest
+class Category extends AbstractModel
 {
 }

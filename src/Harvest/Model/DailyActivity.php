@@ -24,7 +24,7 @@ use Harvest\Model\DayEntry;
  * </ul>
  *
  */
-class DailyActivity extends Harvest
+class DailyActivity extends AbstractModel
 {
     /**
      * @var string daily
@@ -81,7 +81,7 @@ class DailyActivity extends Harvest
         } elseif ($property == "projects" || $property == "projects") {
             $this->_projects = $value;
         } else {
-            throw new HarvestException( sprintf('Unknown property %s::%s', get_class($this), $property));
+            throw new HarvestException(sprintf('Unknown property %s::%s', get_class($this), $property));
         }
     }
 
@@ -94,13 +94,13 @@ class DailyActivity extends Harvest
      */
     public function __call($method, $arguments)
     {
-        if ( count($arguments) == 0 ) {
-            return $this->get( $method );
-        } elseif ( count( $arguments ) == 1 ) {
-            return $this->set( $method, $arguments[0] );
+        if (count($arguments) == 0) {
+            return $this->get($method);
+        } elseif (count($arguments) == 1) {
+            return $this->set($method, $arguments[0]);
         }
 
-        throw new HarvestException( sprintf('Unknown method %s::%s', get_class($this), $method));
+        throw new HarvestException(sprintf('Unknown method %s::%s', get_class($this), $method));
     }
 
     /**
@@ -117,10 +117,10 @@ class DailyActivity extends Harvest
                     $this->_forDay = $item->nodeValue;
                 break;
                 case "day_entries":
-                    $this->_dayEntries = $this->parseItems( $item );
+                    $this->_dayEntries = $this->parseItems($item);
                 break;
                 case "projects":
-                    $this->_projects = $this->parseItems( $item );
+                    $this->_projects = $this->parseItems($item);
                 break;
                 default:
                 break;
@@ -139,8 +139,8 @@ class DailyActivity extends Harvest
         $items = array();
 
         foreach ($xml->childNodes AS $item) {
-            $item = $this->parseNode( $item );
-            if ( ! is_null( $item ) ) {
+            $item = $this->parseNode($item);
+            if (! is_null($item)) {
                 $items[$item->id()] = $item;
             }
         }
@@ -168,8 +168,8 @@ class DailyActivity extends Harvest
             default:
             break;
         }
-        if ( ! is_null( $item ) ) {
-            $item->parseXml( $node );
+        if (! is_null($item)) {
+            $item->parseXml($node);
         }
 
         return $item;

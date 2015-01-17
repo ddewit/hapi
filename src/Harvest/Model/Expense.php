@@ -32,7 +32,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class Expense extends Harvest
+class Expense extends AbstractModel
 {
     /**
      * @var string expense

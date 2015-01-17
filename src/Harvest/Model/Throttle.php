@@ -23,7 +23,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class Throttle extends Harvest
+class Throttle extends AbstractModel
 {
     /**
      * @var string hash

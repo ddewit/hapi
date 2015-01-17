@@ -44,7 +44,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class Project extends Harvest
+class Project extends AbstractModel
 {
     /**
      * @var string project
@@ -101,11 +101,11 @@ class Project extends Harvest
         foreach ($node->childNodes as $item) {
             switch ($item->nodeName) {
                 case "tasks":
-                    $this->_tasks = $this->parseItems( $item );
+                    $this->_tasks = $this->parseItems($item);
                 break;
                 default:
                     if ($item->nodeName != "#text") {
-                        $this->set( $item->nodeName, $item->nodeValue);
+                        $this->set($item->nodeName, $item->nodeValue);
                     }
                 break;
             }
@@ -123,8 +123,8 @@ class Project extends Harvest
         $items = array();
 
         foreach ($xml->childNodes AS $item) {
-            $item = $this->parseNode( $item );
-            if ( ! is_null( $item ) ) {
+            $item = $this->parseNode($item);
+            if (! is_null($item)) {
                 $items[$item->id()] = $item;
             }
         }
@@ -149,8 +149,8 @@ class Project extends Harvest
             default:
             break;
         }
-        if ( ! is_null( $item ) ) {
-            $item->parseXml( $node );
+        if (! is_null($item)) {
+            $item->parseXml($node);
         }
 
         return $item;

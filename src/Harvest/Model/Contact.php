@@ -27,7 +27,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class Contact extends Harvest
+class Contact extends AbstractModel
 {
     /**
      * @var string contact

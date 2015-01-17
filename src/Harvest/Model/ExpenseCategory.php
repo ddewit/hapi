@@ -26,7 +26,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class ExpenseCategory extends Harvest
+class ExpenseCategory extends AbstractModel
 {
     /**
      * @var string expense-category

@@ -26,7 +26,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class UserAssignment extends Harvest
+class UserAssignment extends AbstractModel
 {
     /**
      * @var string user-assignment

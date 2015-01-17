@@ -22,7 +22,7 @@ use Harvest\Model\DayEntry;
  * </ul>
  *
  */
-class Timer extends Harvest
+class Timer extends AbstractModel
 {
     /**
      * @var DayEntry object of the timer
@@ -88,7 +88,7 @@ class Timer extends Harvest
             switch ($item->nodeName) {
                 case "day_entry":
                     $this->_dayEntry = new DayEntry();
-                    $this->_dayEntry->parseXml( $node );
+                    $this->_dayEntry->parseXml($node);
                 break;
                 case "hours_for_previously_running_timer":
                     $this->_hoursForPrevious = $item->nodeValue;

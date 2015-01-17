@@ -27,7 +27,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class Task extends Harvest
+class Task extends AbstractModel
 {
     /**
      * @var string task

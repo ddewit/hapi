@@ -26,7 +26,7 @@ namespace Harvest\Model;
  * </ul>
  *
  */
-class Client extends Harvest
+class Client extends AbstractModel
 {
     /**
      * @var string client

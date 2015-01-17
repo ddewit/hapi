@@ -1,169 +1,33 @@
-# Original HarvestApi PHP Wrapper Library Changelog
+# Hapi release notes
 
-This is the changelog of the HarvestApi library for PHP. The original library can be found at http://resources.mdbitz.com/2009/11
-
-* 1.1.1 (released 10-04-2010)
-
-    Comment:
-
-    getClientProjects Bug Fix Release
-
-    Changes:
-
-    * missing query parameter fixed – thanks to Warren Sherliker for identifying this issue.
+Welcome & thanks for using Hapi!
 
 
-* 1.1.0 (released 08-19-2010)
 
-    Comment:
+## 2.0 release - under development
 
-    Enhancement Release to incorporate latest Harvest API changes including default [SSL security](http://www.getharvest.com/blog/2010/08/secure-connection-for-all-accounts) and [updated_since option](http://forum.getharvest.com/forums/api-and-developer-chat/topics/announcement-updated_since-available-in-invoices-api)
+This release marks a new era of Hapi. It is a almost full rewrite of the original library to reduce code complexity and improve maintainability.
 
-    Changes:
+### Notable changes and new features
 
-    * default SSL mode set to TRUE
-    * Follow Redirects enabled on underlying curl settings to follow 30X redirects
-    * *getProjects* optional updated_since parameter added
-    * *getClients* optional updated_since parameter added
-    * *getContacts* optional updated_since parameter added
-    * *Filter* optional updated_since parameter added
+ - A new API to fetch/write objects, instead of using methods like `$harvestApi->getClient(123)`, we're now using `$harvestApi->api('client')->get(123)`. This was done to improve memory usage and reduce complexity.
+ - Hapi now handles type (un)marshaling for you. This means it'll return a nice `DateTime` object when your accessing properties like `created_at`.
+ - We've improved our test code coverage to about 90% and 70% for our main classes (`HarvestApi` and `AbstractModel`).
 
-* 1.0.1 (released 08-05-2010)
+### Migrating to 2.0 from 0.1
 
-    Comment:
+ - Updating calls to the API in your application is nessecary, as the old methods we're directly removed. Please refer to the example in `README.md` to see an updated example.
+ - Any code in your application that does some sort of type casting when reading from and writing to the API can be removed.
 
-    assignUserToProject Bug Fix Release
 
-	Changes:
 
-    * Typo corrected in assignUserToProject function – thanks to John Vitelli for identifying this issue.
+## 0.1 release
 
-* 1.0.0 (released 05-01-2010)
+This release is intented to provide a stable reference point for developers wanting to work on production-level applications that use Hapi.
 
-    Comment:
+### Notable changes and new features
 
-    Official 1.0 release of the HaPi - PHP Wrapper Library for the Harvest API. This release contains multiple bug fixes as well as the HarvestReports interface for performing common tasks like getting only the active projects and clients.
-
-    Changes:
-
-    * New HarvestReports extension class - extends the HarvestApi class with additional reporting features
-        * getActiveClients
-        * getInactiveClients
-        * getActiveProjects
-        * getInActiveProjects
-        * getClientActiveProjects
-        * getClientInActiveProjects
-        * getActiveUsers
-        * getInactiveUsers
-        * getAdmins
-        * getActiveAdmins
-        * getInActiveAdmins
-        * getContractors
-        * getActiveContractors
-        * getInactiveContractors
-        * getActiveTimers
-        * getUsersActiveTimer
-
-    * Added DateTime support to Range
-    * Added the following pre set ranges to Range
-        * today
-        * thisWeek
-        * lastWeek
-        * thisMonth
-        * lastMonth
-
-    * Added support for getClientProjects to return projects that belong to a single client
-    * Addition of underscore converter so users can call properties directly without utilizing get.
-    * Bug Fix for createEntry returned data
-    * Bug Fix for getUserEntries
-    * Conversion of Request class to Throttle
-    * Cleanup of code samples in documentation
-
-* 0.4.2 (released 04-20-2010)
-
-    Comment:
-
-    Bug Fix for User & Project Activity
-
-    Changes:
-
-    * DailyActivity object is used both in the time and extended api, however they are inconsistent with the token character used -, _. daily-activity added to parser for quick fix, Version 1.0 will contain conversion checking.
-
-* 0.4.1 (released 04-16-2010)
-
-    Comment:
-
-    Bug Fix for SSL support
-
-    Changes:
-
-    * CURLOPT_SSL_VERIFYPEER option set to false so that request does not fail if SSL Certificate isn't verified
-
-* 0.4.0 (released 12-2-2009)
-
-    Comment:
-
-    Support for Full API
-
-    * getExpense - bug fix of improper generated url
-    * parseNode - bug fix for parsing of task assignments
-    * Documentation - Class Object Properties added
-    * Full Testing of GET methods
-
-* 0.3.0 (released 11-15-2009)
-
-    Comment:
-
-    Support for Full extends REST API minus payment receipts
-
-    Changes:
-
-    * phpDocument - documentation compliant
-    * Creation of Currency Class
-    * Creation of TimeZone Class
-    * HarvestApi - extended REST Support
-    * HarvestApi - ssl support
-
-* 0.2.0 (released 11-11-2009)
-
-    Comment:
-
-    Added support for POST, PUT, and DELETE requests, toXML functions for Harvest Classes, and Full API implementation of Projects, Clients, Client Contacts
-
-    Changes:
-
-    * Added _toXML_ function to Harvest
-    * Added helper functions to HarvestApi
-        * performPut -> performs PUT request
-        * performPost -> performs POST request
-        * performDelete -> performs DELETE request
-        * parseHeader -> parse header into array that can be used in perform functions
-        * resetHeader -> reset header array.
-    * Addition of HarvestApi functions for Clients, Projects, and Client Contacts
-        * createClient - Create a new Client
-        * updateClient - Update an existing Client
-        * toggleClient - Toggle CLient active-inactive
-        * deleteClient - Delete an existing Client
-        * createProject - Create a new Project
-        * updateProject - Update an existing Project
-        * toggleProject - Toggle Project active-inactive
-        * deleteClient - Delete an existing Project
-        * createContact - Create a new Client Contact
-        * updateContact - Update an existing Client Contact
-        * deleteContact - Delete an existing Client Contact
-    * Addition of Timer Class
-        * Addition of __root_ variable to classes for xml conversion
-        * Bug Fix: _isSuccess_ method of Result
-        * Bug Fix: replacement of YahooFinance_Exception with HarvestException
-
-* 0.1.0 (released 11-04-2009)
-
-    Comment:
-
-    Initial Version of the HarvestApi
-
-    Changes:
-
-    * Creation of main Class HarvestApi
-    * Creation of Harvest Class Objects
-    * Implementation of GET methods of Harvest API
+ - No new features were introduced.
+ - The library as written by Matthew John Denton, was converted to use PSR-0 with proper namespacing.
+ - Hapi is now available on Packagist/installable via Composer.
+ - Hapi now features a set of basic unit tests.
