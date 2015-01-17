@@ -95,84 +95,46 @@ abstract class AbstractModel
         throw new Exception\HarvestException(sprintf('Unknown method %s::%s', get_class($this), $method));
     }
 
-    public function marshalValue($value, $type) {
+    /**
+     * Cast XML typed value to native PHP value
+     *
+     * @param string $value
+     * @return mixed $value
+     */
+    public function marshalValue($value, $type = 'string') {
         if(empty($value)) {
             return null;
         }
 
-        switch($type) {
-            case "":
-            case "string":
-                return (string)$value;
-                break;
+        $type = ucfirst($type);
 
-            case "integer":
-                if(is_numeric($value)) {
-                    return (int)$value;
-                } else {
-                    throw new Exception\HarvestException(sprintf('Got invalid integer: %s', $value));
-                }
-                break;
-
-            case "dateTime":
-                $date = \DateTime::createFromFormat(\DateTime::ISO8601, $value);
-                if($date) {
-                    return $date;
-                } else {
-                    throw new Exception\HarvestException(sprintf('Got invalid datetime (not ISO8601): %s', $value));
-                }
-                break;
-
-            case "date":
-                $date = \DateTime::createFromFormat('Y-m-d', $value);
-                if($date) {
-                    return $date;
-                } else {
-                    throw new Exception\HarvestException(sprintf('Got invalid date (not YYYY-MM-DD): %s', $value));
-                }
-                break;
-
-            case "boolean":
-                if($value === 'true' || $value === 'false') {
-                    return ($value === 'true');
-                } else {
-                    throw new Exception\HarvestException(sprintf('Got invalid boolean: %s', $value));
-                }
-                break;
-
-            default:
-                throw new Exception\HarvestException(sprintf('Got unexpected type: %s', $type));
-                break;
+        if(class_exists("\\Harvest\\Type\\{$type}")) {
+            $className = "\\Harvest\\Type\\{$type}";
+            $type = new $className;
+            return $type->marshal($value);
+        } else {
+            throw new \InvalidArgumentException(sprintf('Got unexpected type while marshaling: %s', $type));
         }
     }
 
+    /**
+     * Cast native PHP value to XML typed value
+     *
+     * @param mixed $value
+     * @return string $value
+     */
     public function unmarshalValue($value) {
         $type = gettype($value);
         if($type === 'object') { // TODO: nasty
             $type = get_class($value);
         }
 
-        switch($type) {
-            case "":
-            case "string":
-                return (string)$value;
-                break;
-
-            case "integer":
-                return (string)$value;
-                break;
-
-            case "DateTime":
-                return $value->format(\DateTime::ISO8601);
-                break;
-
-            case "boolean":
-                return ($value === true) ? 'true' : 'false';
-                break;
-
-            default:
-                throw new Exception\HarvestException(sprintf('Got unexpected type %s', $type));
-                break;
+        if(class_exists("\\Harvest\\Type\\{$type}")) {
+            $className = "\\Harvest\\Type\\{$type}";
+            $type = new $className;
+            return $type->unmarshal($value);
+        } else {
+            throw new \InvalidArgumentException(sprintf('Got unexpected type while unmarshaling: %s', $type));
         }
     }
 
@@ -186,7 +148,11 @@ abstract class AbstractModel
     {
         foreach ($node->childNodes as $item) {
             if ($item->nodeName !== "#text") {
-                $value = $this->marshalValue($item->nodeValue, $item->getAttribute('type'));
+                if($item->hasAttribute('type')) {
+                    $value = $this->marshalValue($item->nodeValue, $item->getAttribute('type'));
+                } else {
+                    $value = $this->marshalValue($item->nodeValue);
+                }
                 $this->set($item->nodeName, $value);
             }
         }
@@ -201,8 +167,8 @@ abstract class AbstractModel
     {
         $xml = "<$this->_root>\n";
         foreach ($this->_values as $key => $value) {
-            $value = $this->unmarshalValue($value);
-            $xml .= sprintf("\t<%s>%s</%1\$s>\n", $key, htmlspecialchars($value, ENT_XML1));
+            $value = htmlspecialchars($this->unmarshalValue($value), ENT_XML1);
+            $xml .= sprintf("\t<%s>%s</%1\$s>\n", $key, $value);
         }
         $xml .= "</$this->_root>";
 

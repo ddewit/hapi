@@ -104,13 +104,17 @@ class Project extends AbstractModel
                     $this->_tasks = $this->parseItems($item);
                 break;
                 default:
-                    if ($item->nodeName != "#text") {
-                        $this->set($item->nodeName, $item->nodeValue);
+                    if ($item->nodeName !== "#text") {
+                        if($item->hasAttribute('type')) {
+                            $value = $this->marshalValue($item->nodeValue, $item->getAttribute('type'));
+                        } else {
+                            $value = $this->marshalValue($item->nodeValue);
+                        }
+                        $this->set($item->nodeName, $value);
                     }
                 break;
             }
         }
-
     }
 
     /**
