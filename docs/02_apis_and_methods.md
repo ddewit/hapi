@@ -47,8 +47,9 @@ HaPi status: `implemented`
    Delete a client.
    
 ## Estimates
- * Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Estimates.md  
- * HaPi status: `wontfix`
+
+Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Estimates.md  
+HaPi status: `wontfix`
 
 Currently, the Harvest API does not have support for Estimates. They do not have a timeframe for deploying it. So HaPi does not support this either. Sorry.
 
