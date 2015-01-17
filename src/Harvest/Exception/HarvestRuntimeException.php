@@ -2,7 +2,7 @@
 
 namespace Harvest\Exception;
 
-class HarvestInvalidXmlException extends HarvestException
+class HarvestRuntimeException extends HarvestException
 {
 
 }

@@ -7,30 +7,35 @@ use Harvest\Exception;
 
 class HttpResponse
 {
+    protected $request = null;
     protected $code = null;
     protected $data = null;
     protected $headers = null;
 
     /**
-     * Constructor initializes {@link $code} {@link $data}
-     *
-     * @param string $code    response code
-     * @param array  $data    array of Quote Objects
-     * @param array  $headers array of Header Response values
+     * @param string|int $code HTTP response code (i.e. 500)
+     * @param array $data Data returned by the server
+     * @param array $headers Headers returned by the server
      */
-    public function __construct($code = null, $data = null, $headers = null)
+    public function __construct($curlHandle, $code = null, $data = null, $headers = null)
     {
+        $this->request = curl_getinfo($curlHandle)['request_header'];
         $this->code = (int)$code;
         $this->data = $data;
         $this->headers = $headers;
 
-        $this->handleUnsuccessfull();
+        // $this->handleUnsuccessfull();
     }
-
+    
+    /**
+     * Throw an exception if request failed
+     *
+     * @return void
+     */
     protected function handleUnsuccessfull() {
         switch($this->code) {
             case 401:
-                throw new HarvestAuthenticationException($this->get('headers')['Hint']);
+                throw new Exception\HarvestAuthenticationException($this->get('headers')['Hint']);
                 break;
 
             case 400:
@@ -39,21 +44,17 @@ class HttpResponse
             case 500:
             case 501:
             case 502:
-                throw new HarvestRuntimeException($this->get('headers')['Status']);
+                throw new Exception\HarvestRuntimeException($this->get('headers')['Status']);
                 break;
 
             case 503:
-                throw new HarvestApiLimitExceedException(sprintf("Retry after %s seconds", $this->get('headers')['Retry-After']));
+                throw new Exception\HarvestApiLimitExceedException(sprintf("Retry after %s seconds", $this->get('headers')['Retry-After']));
                 break;
         }
     }
 
     /**
-     * magic method to return non public properties
-     *
-     * @see     get
-     * @param  mixed $property
-     * @return mixed
+     * @see get
      */
     public function __get($property)
     {
@@ -63,7 +64,7 @@ class HttpResponse
     /**
      * Return the specified property
      *
-     * @param  mixed $property The property to return
+     * @param  mixed $property
      * @return mixed
      */
     public function get($property)
@@ -82,19 +83,14 @@ class HttpResponse
                 if ($this->headers != null && array_key_exists($property, $this->headers)) {
                     return $this->headers[$property];
                 } else {
-                    throw new HarvestException(sprintf('Unknown property %s::%s', get_class($this), $property));
+                    throw new Exception\HarvestException(sprintf('Unknown property %s::%s', get_class($this), $property));
                 }
             break;
         }
     }
 
     /**
-     * magic method to set non public properties
-     *
-     * @see    set
-     * @param  mixed $property
-     * @param  mixed $value
-     * @return void
+     * @see set
      */
     public function __set($property, $value)
     {
@@ -102,10 +98,10 @@ class HttpResponse
     }
 
     /**
-     * sets the specified property
+     * Set value of the specified property
      *
-     * @param  mixed $property The property to set
-     * @param  mixed $value    value of property
+     * @param mixed $property
+     * @param mixed $value
      * @return void
      */
     public function set($property, $value)
@@ -121,22 +117,19 @@ class HttpResponse
                 $this->headers = $value;
             break;
             default:
-                throw new HarvestException(sprintf('Unknown property %s::%s', get_class($this), $property));
+                throw new Exception\HarvestException(sprintf('Unknown property %s::%s', get_class($this), $property));
             break;
         }
     }
 
     /**
-     * is request successfull
+     * Check if request was successful
+     *
      * @return boolean
      */
     public function isSuccess()
     {
-        if ("2" == substr($this->code, 0, 1)) {
-            return true;
-        } else {
-            return false;
-        }
+        return ("2" === substr($this->code, 0, 1));
     }
 
 }

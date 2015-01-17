@@ -26,7 +26,7 @@ class Client extends AbstractApi
     public function all($updated_since = null)
     {
         $url = "clients" . $this->appendUpdatedSinceParam($updated_since);
-        return $this->get($url, true);
+        return $this->performGet($url, true);
     }
 
     /**
@@ -48,7 +48,7 @@ class Client extends AbstractApi
     public function get($client_id)
     {
         $url = "clients/$client_id";
-        return $this->get($url, false);
+        return $this->performGet($url, false);
     }
 
     /**
@@ -74,7 +74,7 @@ class Client extends AbstractApi
     public function create(Model\Client $client)
     {
         $url = "clients";
-        return $this->post($url, $client->toXml());
+        return $this->performPost($url, $client->toXml());
     }
 
     /**
@@ -100,7 +100,7 @@ class Client extends AbstractApi
     public function update(Model\Client $client)
     {
         $url = "clients/$client->id";
-        return $this->put($url, $client->toXml());
+        return $this->performPut($url, $client->toXml());
     }
 
     /**
@@ -121,7 +121,7 @@ class Client extends AbstractApi
     public function toggle($client_id)
     {
         $url = "clients/$client_id/toggle";
-        return $this->put($url, "");
+        return $this->performPut($url, "");
     }
 
     /**
@@ -142,6 +142,6 @@ class Client extends AbstractApi
     public function delete($client_id)
     {
         $url = "clients/$client_id";
-        return $this->delete($url);
+        return $this->performDelete($url);
     }
 }

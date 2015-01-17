@@ -10,7 +10,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $http = new \Harvest\HttpClient\HttpClient;
         $http->clearHeaders();
         $this->assertEquals(array(
-            'User-Agent: PHP Wrapper Library for Harvest API',
+            'User-Agent: Hapi / PHP Wrapper Library for Harvest API',
             'Accept: application/xml',
             'Content-Type: application/xml',
             'Authorization: Basic Og==',
@@ -82,5 +82,21 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Harvest\Model\Project', $parsed);
         // TODO: do some assertions on the types as well
+    }
+    
+    // public function testParseItemsWithClients() {
+    //     
+    // }
+    
+    public function testParseItemsWithEmptyResponse() {
+        $http = new \Harvest\HttpClient\HttpClient;
+
+        // example response from /clients/id
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>
+                <nil-classes type="array"/>';
+
+        $parsed = $http->parseItems($xml);
+
+        $this->assertEquals(array(), $parsed);
     }
 }

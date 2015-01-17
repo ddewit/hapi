@@ -26,37 +26,30 @@ abstract class AbstractApi
     protected function performPost($path, $data) {
         return $this->harvest->getHttpClient()->post($path, $data);
     }
-
+    
     /**
      * @return HttpResponse
      */
-    protected function performPatch() {
-        return $this->harvest->getHttpClient()->patch();
+    protected function performPut($path, $data) {
+        return $this->harvest->getHttpClient()->put($path, $data);
     }
 
     /**
      * @return HttpResponse
      */
-    protected function performPut() {
-        return $this->harvest->getHttpClient()->put();
-    }
-
-    /**
-     * @return HttpResponse
-     */
-    protected function performDelete() {
-        return $this->harvest->getHttpClient()->delete();
+    protected function performDelete($path) {
+        return $this->harvest->getHttpClient()->delete($path);
     }
 
     /**
      * @param DateTime $updated_since
      * @return string URL parameter
      */
-    protected function appendUpdatedSinceParam($updated_since = null)
+    public function appendUpdatedSinceParam($updated_since = null)
     {
         if (is_null($updated_since)) {
             return "";
-        } elseif ($updated_since instanceOf DateTime) {
+        } elseif ($updated_since instanceof \DateTime) {
             return '?updated_since=' . urlencode($updated_since->format("Y-m-d G:i"));
         } else {
             return '?updated_since=' . urlencode($updated_since);
