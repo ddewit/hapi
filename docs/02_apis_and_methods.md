@@ -141,4 +141,20 @@ HaPi status: `todo`
  * `\Harvest\Api\InvoicePayment::delete(int $invoice_payment_id, int $invoice_id)`  
    Delete given payment from given invoice.
 
+## Tasks
+
+Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Tasks.md  
+HaPi status: `todo`
+
+ * `\Harvest\Api\Task::all([ DateTime $updated_since ])`  
+   Get all tasks.
+ * `\Harvest\Api\Task::get(int $task_id)`  
+   Get a task.
+ * `\Harvest\Api\Task::create(Model\Task $task)`  
+   Create a new task.
+ * `\Harvest\Api\Task::update(Model\Task $task)`  
+   Update a task.
+ * `\Harvest\Api\Task::delete(int $task_id)`  
+   Delete a task.
+
 `[ more to come soon. ]`
