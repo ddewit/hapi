@@ -24,6 +24,7 @@ class HttpClient
 
     protected $mode = self::MODE_FAIL;
     protected $headers = array();
+    protected $urlParameters = array();
 
     private $username;
     private $password;
@@ -83,6 +84,24 @@ class HttpClient
             'Authorization: Basic ' . base64_encode($this->username . ":" . $this->password),
        );
        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $this->headers);
+    }
+    
+    /**
+     * Add extra URL parameters to the existing set of URL parameters
+     *
+     * @param array $urlParameters ( key => value, key => value )
+     */
+    public function setUrlParameters($urlParameters = array())
+    {
+        $this->urlParameters = array_merge($this->urlParameters, $urlParameters);
+    }
+    
+    /**
+     * Reset the URL parameters to the default settings
+     */
+    public function clearUrlParameters()
+    {
+        $this->urlParameters = array();
     }
 
     /**
@@ -157,7 +176,8 @@ class HttpClient
      * @return HttpResponse
      */
     protected function execute($path) {
-        curl_setopt($this->curlHandle, CURLOPT_URL, "https://{$this->account}.harvestapp.com/" . $path);
+        $parameters = (!empty($this->urlParameters)) ? '?'.http_build_query($this->urlParameters) : '';
+        curl_setopt($this->curlHandle, CURLOPT_URL, "https://{$this->account}.harvestapp.com/" . $path . $parameters);
         
         $data = null;
         $code = null;
