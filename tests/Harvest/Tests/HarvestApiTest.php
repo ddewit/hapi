@@ -10,6 +10,20 @@ use Harvest;
 class HarvestApiTest extends \PHPUnit_Framework_TestCase
 {
     public function testFetchApiClass() {
+        $config = file_exists(BASE_PATH . DIRECTORY_SEPARATOR . $_SERVER['API_CONFIG_FILE']) ? json_decode(file_get_contents(BASE_PATH . DIRECTORY_SEPARATOR . $_SERVER['API_CONFIG_FILE'])) : array();
+        if (!$config) {
+            $this->markTestSkipped('No API config file present.');
+        }
+        
+        $harvest = new \Harvest\HarvestApi;
+        $harvest->authenticate($config->user, $config->password);
+        $harvest->setAccount($config->account);
+        $response = $harvest->api('Account')->whoAmI();
+        
+        var_dump($response);
+        die();
+        
+        
         $harvest = new \Harvest\HarvestApi;
         $this->assertInstanceOf('Harvest\Api\Project', $harvest->api('Project'));
     }
