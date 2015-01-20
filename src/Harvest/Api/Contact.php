@@ -15,7 +15,7 @@ class Contact extends AbstractApi
         return $this->performGet($url, true);
     }
 
-    public function getContactsForClient($client_id)
+    public function allContactsForClient($client_id)
     {
         $url = "clients/$client_id/contacts";
         return $this->performGet($url, true);

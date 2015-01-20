@@ -32,6 +32,12 @@ class Task extends AbstractApi
         $url = "tasks/$task->id";
         return $this->performPut($url, $task->toXml());
     }
+    
+    public function activate($task_id)
+    {
+        $url = "tasks/$task_id/activate";
+        return $this->performPost($url, "");
+    }
 
     public function delete($task_id)
     {

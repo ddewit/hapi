@@ -188,32 +188,36 @@ class Filter
      *
      * @return String query uri
      */
-    public function toURL()
+    public function toArray()
     {
-        $query = "";
+        $parameters = array();
+
         if(!is_null($this->_page)) {
-            $query .= "&page=" . $this->_page;
+            $parameters['page'] = $this->_page;
         }
+        
         if(!is_null($this->_client)) {
-            $query .= "&client=" . $this->_client;
+            $parameters['client'] = $this->_client;
         }
+        
         if(!is_null($this->_status)) {
-            $query .= "&status=". $this->_status;
+            $parameters['status'] = $this->_status;
         }
+        
         if(!is_null($this->_range)) {
-            $query .= "&from=" . $this->_range->from() . "&to=" . $this->_range->to();
+            $parameters['from'] = $this->_range->from();
+            $parameters['to'] = $this->_range->to();
         }
+        
         if(!is_null($this->_updated_since)) {
-            $query .= '&updated_since=';
             if($this->_updated_since instanceOf DateTime) {
-                $query .= urlencode($this->_updated_since->format("Y-m-d G:i"));
+                $parameters['updated_since'] = urlencode($this->_updated_since->format("Y-m-d G:i"));
             } else {
-                $query .= urlencode($this->_updated_since);
+                $parameters['updated_since'] = urlencode($this->_updated_since);
             }
         }
-        $query = "?" . substr($query, 1);
-
-        return $query;
+        
+        return $parameters;
     }
 
 }

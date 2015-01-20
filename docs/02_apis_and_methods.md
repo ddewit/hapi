@@ -17,7 +17,7 @@ HaPi status: `untested`
 
  * `\Harvest\Api\Contact::all([ DateTime $updated_since ])`  
    Get all contacts for an account.
- * `\Harvest\Api\Contact::contactsForClient(int $client_id, [ DateTime $updated_since ])`  
+ * `\Harvest\Api\Contact::allContactsForClient(int $client_id, [ DateTime $updated_since ])`  
    Get all contacts for a client.
  * `\Harvest\Api\Contact::get(int $contact_id)`  
    Get a client contact.
@@ -76,17 +76,15 @@ HaPi status: `todo`
 Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Expense%20Tracking.md  
 HaPi status: `todo`
 
- * `\Harvest\Api\Expense::all(DateTime $from, DateTime $to)`  
-   Get all expenses (undocumented by Harvest, might break).
  * `\Harvest\Api\Expense::get(int $expense_id)`  
    Get an expense.
- * `\Harvest\Api\Expense::getImageForExpense(int $expense_id)`  
+ * `\Harvest\Api\Expense::getReceipt(int $expense_id)`  
    Get a receipt image associated with an expense.
  * `\Harvest\Api\Expense::create(Model\Expense $expense)`  
    Create a new expense.
  * `\Harvest\Api\Expense::update(Model\Expense $expense)`  
    Update an expense.
- * `\Harvest\Api\Expense::attachImageToExpense(Model\ExpenseImage $expense, int $expense_id)`  
+ * `\Harvest\Api\Expense::attachReceipt(int $expense_id, string $image_path)`  
    Attach a receipt image to an expense.
  * `\Harvest\Api\Expense::delete(int $expense_id)`  
    Delete an expense.
@@ -115,12 +113,12 @@ Notes:
 Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Invoice%20Messages.md  
 HaPi status: `todo`
 
- * `\Harvest\Api\InvoiceMessage::messagesForInvoice(int $invoice_id)`  
+ * `\Harvest\Api\InvoiceMessage::allMessagesForInvoice(int $invoice_id)`  
    Get all messages for given invoice.
- * `\Harvest\Api\InvoiceMessage::get(int $invoice_message_id, int $invoice_id)`  
+ * `\Harvest\Api\InvoiceMessage::getForInvoice(int $invoice_message_id, int $invoice_id)`  
    Get a single message from given invoice.
- * `\Harvest\Api\InvoiceMessage::create(Model\InvoiceMessage $invoice_message, int $invoice_id)`  
-   Create a new message for given invoice.
+ * `\Harvest\Api\InvoiceMessage::sendInvoice(Model\InvoiceMessage $invoice_message, int $invoice_id)`  
+   Send a message for given invoice.
  * incomplete.
 
 Notes:
@@ -141,10 +139,48 @@ HaPi status: `todo`
  * `\Harvest\Api\InvoicePayment::delete(int $invoice_payment_id, int $invoice_id)`  
    Delete given payment from given invoice.
 
+## People
+
+Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/People.md  
+HaPi status: `untested`
+
+ * `\Harvest\Api\Person::all([ DateTime $updated_since ])`  
+   Get all users.
+ * `\Harvest\Api\Person::get(int $user_id)`  
+   Get a user.
+ * `\Harvest\Api\Person::create(Model\User $user)`  
+   Create a new user.
+ * `\Harvest\Api\Person::update(Model\User $user)`  
+   Update a user.
+ * `\Harvest\Api\Person::toggle(int $user_id)`  
+   Toggle a user.
+ * `\Harvest\Api\Person::delete(int $user_id)`  
+   Delete a user.
+
+## Projects
+
+Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Projects.md  
+HaPi status: `implemented`
+
+ * `\Harvest\Api\Project::all([ DateTime $updated_since ])`  
+   Get all projects.
+ * `\Harvest\Api\Project::allProjectsForClient(int $client_id)`  
+   Get all projects for client.
+ * `\Harvest\Api\Project::get(int $project_id)`  
+   Get a project.
+ * `\Harvest\Api\Project::create(Model\User $project)`  
+   Create a new project.
+ * `\Harvest\Api\Project::update(Model\User $project)`  
+   Update a project.
+ * `\Harvest\Api\Project::toggle(int $project_id)`  
+   Toggle a project.
+ * `\Harvest\Api\Project::delete(int $project_id)`  
+   Delete a project.
+
 ## Tasks
 
 Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Tasks.md  
-HaPi status: `todo`
+HaPi status: `untested`
 
  * `\Harvest\Api\Task::all([ DateTime $updated_since ])`  
    Get all tasks.
@@ -154,7 +190,29 @@ HaPi status: `todo`
    Create a new task.
  * `\Harvest\Api\Task::update(Model\Task $task)`  
    Update a task.
+ * `\Harvest\Api\Task::activate(int $task_id)`  
+   Activate a task.
  * `\Harvest\Api\Task::delete(int $task_id)`  
    Delete a task.
+   
+## Task Assignments
 
-`[ more to come soon. ]`
+Harvest API docs: https://github.com/harvesthq/api/blob/master/Sections/Task%20Assignment.md  
+HaPi status: `untested`
+
+ * `\Harvest\Api\TaskAssignment::allForProject(int $project_id, [ DateTime $updated_since ])`  
+   Get all task assignments for given project.
+ * `\Harvest\Api\TaskAssignment::getForProject(int $task_assignment_id, int $project_id)`  
+   Get a task assignment.
+ * `\Harvest\Api\TaskAssignment::assignToProject(int $task_assignment_id, int $project_id)`  
+   Assign a task assignment to given project.
+ * `\Harvest\Api\TaskAssignment::createAndAssignToProject(Moderl\TaskAssignment $task_assignment, int $project_id)`  
+   Crea a task assignment and assign it to given project.
+ * `\Harvest\Api\TaskAssignment::update(Model\Task $task_assignment)`  
+   Update a task assignment.
+ * `\Harvest\Api\TaskAssignment::delete(int $task_assignment_id, int $project_id)`  
+   Delete a task assignment.
+   
+## My API is missing
+
+No worries, we're adding more as we're progressing. It's our target to support all API's in the near future.

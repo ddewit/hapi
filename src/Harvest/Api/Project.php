@@ -15,7 +15,7 @@ class Project extends AbstractApi
         return $this->performGet($url, true);
     }
 
-    public function getProjectsForClient($client_id)
+    public function allProjectsForClient($client_id)
     {
         $url = "projects?client=$client_id";
         return $this->performGet($url, true);
