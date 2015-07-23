@@ -36,7 +36,7 @@ class Client extends AbstractApi
     public function toggle($client_id)
     {
         $url = "clients/$client_id/toggle";
-        return $this->performPut($url, "");
+        return $this->performPost($url, "");
     }
 
     public function delete($client_id)
