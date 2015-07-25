@@ -239,6 +239,7 @@ class HttpClient
     {
         $this->clearHeaders();
         $this->setPostData($data);
+        $this->setHttpMode(self::HTTP_POST);
         
         $response = $this->execute($path);
         $responseData = $response->get('data');

@@ -8,7 +8,7 @@ use \Harvest\Model;
 class Invoice extends AbstractApi
 {
     
-    public function all(Model\Filter\Invoice $filter = null)
+    public function all(Model\Invoice\Filter $filter = null)
     {
         $url = "invoices";
         
