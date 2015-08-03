@@ -128,6 +128,8 @@ abstract class AbstractModel
         if($type === 'object') { // TODO: nasty
             $type = get_class($value);
         }
+        
+        $type = ucfirst($type);
 
         if(class_exists("\\Harvest\\Type\\{$type}")) {
             $className = "\\Harvest\\Type\\{$type}";
